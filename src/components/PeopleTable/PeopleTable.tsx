@@ -58,119 +58,128 @@ export const PeopleTable = ({ people }: Props) => {
   }
 
   return (
-    <table
-      data-cy="peopleTable"
-      className="table is-striped is-hoverable is-narrow is-fullwidth"
-    >
-      <thead>
-        <tr>
-          <th>
-            <span className="is-flex is-flex-wrap-nowrap">
-              Name
-              <SearchLink params={setOrder('name')}>
-                <span className="icon">
-                  <i className={getIcon('name')} />
+    <>
+      {visibleData.length === 0 && (
+        <p data-cy="noPeopleMessage">
+          There are no people matching the current search criteria
+        </p>
+      )}
+      {visibleData.length > 0 && (
+        <table
+          data-cy="peopleTable"
+          className="table is-striped is-hoverable is-narrow is-fullwidth"
+        >
+          <thead>
+            <tr>
+              <th>
+                <span className="is-flex is-flex-wrap-nowrap">
+                  Name
+                  <SearchLink params={setOrder('name')}>
+                    <span className="icon">
+                      <i className={getIcon('name')} />
+                    </span>
+                  </SearchLink>
                 </span>
-              </SearchLink>
-            </span>
-          </th>
+              </th>
 
-          <th>
-            <span className="is-flex is-flex-wrap-nowrap">
-              Sex
-              <SearchLink params={setOrder('sex')}>
-                <span className="icon">
-                  <i className={getIcon('sex')} />
+              <th>
+                <span className="is-flex is-flex-wrap-nowrap">
+                  Sex
+                  <SearchLink params={setOrder('sex')}>
+                    <span className="icon">
+                      <i className={getIcon('sex')} />
+                    </span>
+                  </SearchLink>
                 </span>
-              </SearchLink>
-            </span>
-          </th>
+              </th>
 
-          <th>
-            <span className="is-flex is-flex-wrap-nowrap">
-              Born
-              <SearchLink params={setOrder('born')}>
-                <span className="icon">
-                  <i className={getIcon('born')} />
+              <th>
+                <span className="is-flex is-flex-wrap-nowrap">
+                  Born
+                  <SearchLink params={setOrder('born')}>
+                    <span className="icon">
+                      <i className={getIcon('born')} />
+                    </span>
+                  </SearchLink>
                 </span>
-              </SearchLink>
-            </span>
-          </th>
+              </th>
 
-          <th>
-            <span className="is-flex is-flex-wrap-nowrap">
-              Died
-              <SearchLink params={setOrder('died')}>
-                <span className="icon">
-                  <i className={getIcon('died')} />
+              <th>
+                <span className="is-flex is-flex-wrap-nowrap">
+                  Died
+                  <SearchLink params={setOrder('died')}>
+                    <span className="icon">
+                      <i className={getIcon('died')} />
+                    </span>
+                  </SearchLink>
                 </span>
-              </SearchLink>
-            </span>
-          </th>
+              </th>
 
-          <th>Mother</th>
-          <th>Father</th>
-        </tr>
-      </thead>
-      <tbody>
-        {visibleData.map(person => (
-          <tr
-            key={person.slug}
-            data-cy="person"
-            className={classNames({
-              'has-background-warning': person.slug === personId,
-            })}
-          >
-            <td>
-              <PersonLink
-                person={{
-                  name: person.name,
-                  sex: person.sex,
-                  slug: person.slug,
-                }}
-              />
-            </td>
-
-            <td>{person.sex}</td>
-            <td>{person.born}</td>
-            <td>{person.died}</td>
-            <td>
-              {person.motherName ? (
-                person.mother ? (
+              <th>Mother</th>
+              <th>Father</th>
+            </tr>
+          </thead>
+          <tbody>
+            {visibleData.map(person => (
+              <tr
+                key={person.slug}
+                data-cy="person"
+                className={classNames({
+                  'has-background-warning': person.slug === personId,
+                })}
+              >
+                <td>
                   <PersonLink
                     person={{
-                      name: person.motherName,
-                      sex: 'f',
-                      slug: person.mother?.slug,
+                      name: person.name,
+                      sex: person.sex,
+                      slug: person.slug,
                     }}
                   />
-                ) : (
-                  person.motherName
-                )
-              ) : (
-                '-'
-              )}
-            </td>
-            <td>
-              {person.fatherName ? (
-                person.father ? (
-                  <PersonLink
-                    person={{
-                      name: person.fatherName,
-                      sex: 'm',
-                      slug: person.father?.slug,
-                    }}
-                  />
-                ) : (
-                  person.fatherName
-                )
-              ) : (
-                '-'
-              )}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+                </td>
+
+                <td>{person.sex}</td>
+                <td>{person.born}</td>
+                <td>{person.died}</td>
+                <td>
+                  {person.motherName ? (
+                    person.mother ? (
+                      <PersonLink
+                        person={{
+                          name: person.motherName,
+                          sex: 'f',
+                          slug: person.mother?.slug,
+                        }}
+                      />
+                    ) : (
+                      person.motherName
+                    )
+                  ) : (
+                    '-'
+                  )}
+                </td>
+                <td>
+                  {person.fatherName ? (
+                    person.father ? (
+                      <PersonLink
+                        person={{
+                          name: person.fatherName,
+                          sex: 'm',
+                          slug: person.father?.slug,
+                        }}
+                      />
+                    ) : (
+                      person.fatherName
+                    )
+                  ) : (
+                    '-'
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </>
   );
 };
